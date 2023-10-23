@@ -138,7 +138,7 @@ export default {
 
       setTimeout(() => {
         this.isLoading = false;
-      }, 300);
+      }, 1500);
     },
   },
   beforeCreate() {
