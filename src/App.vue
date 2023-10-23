@@ -61,7 +61,7 @@
                   rating_women:
                     this.products[index].category === 'women\'s clothing',
                 }"
-                v-for="id in Math.floor(this.products[index].rating.rate)"
+                v-for="id in Math.round(this.products[index].rating.rate)"
                 :key="id"
               ></div>
               <div
@@ -72,7 +72,7 @@
                     this.products[index].category === 'women\'s clothing',
                 }"
                 v-for="id in 5 -
-                Math.floor(this.products[index].rating.rate)"
+                Math.round(this.products[index].rating.rate)"
                 :key="id"
               ></div>
             </div>
