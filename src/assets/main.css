@@ -67,6 +67,7 @@
 
 .container-description {
   padding: 0px 1rem;
+  max-width: 100%;
 }
 
 .title_women {
@@ -294,6 +295,14 @@
     margin: 0 2rem;
   }
 
+  .description-not-found {
+    font-size: 14px;
+  }
+
+  .next-button-not-found {
+    font-size: 14px;
+  }
+
   .container-image {
     max-width: 50%;
     max-height: 50%;
@@ -307,12 +316,12 @@
 
   .title_women {
     font-size: 18px;
-    max-height: 3rem;
+    height: fit-content;
   }
   
   .title_men {
     font-size: 18px;
-    max-height: 3rem;
+    height: fit-content;
   }
 
   .category {
@@ -347,7 +356,7 @@
   .container-description > .description-item {
     font-size: 14px;
     min-height: 1rem;
-    max-height: 5rem;
+    max-height: 8rem;
     overflow: auto;
   }
 
@@ -358,6 +367,10 @@
   
   .price_men {
     font-size: 18px;
+  }
+
+  .button-container {
+    margin-bottom: 1rem;
   }
 
   .button-container > .buy_button_women {
