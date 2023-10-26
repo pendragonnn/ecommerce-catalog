@@ -1,15 +1,12 @@
-
 <template>
   <div
     :class="{
-      container_cover_men: this.products[index].category === 'men\'s clothing',
-      container_cover_women:
-        this.products[index].category === 'women\'s clothing',
+      container_cover_men: this.products.category === 'men\'s clothing',
+      container_cover_women: this.products.category === 'women\'s clothing',
       container_not_found:
-        this.products[index].category !== 'women\'s clothing' &&
-        this.products[index].category !== 'men\'s clothing',
+        this.products.category !== 'women\'s clothing' &&
+        this.products.category !== 'men\'s clothing',
     }"
-    v-if="index < 20"
   >
     <div class="container">
       <div class="container_inner_not_found" v-show="isLoading">
@@ -18,8 +15,8 @@
       <div
         class="container_inner_not_found"
         v-if="
-          this.products[index].category !== 'women\'s clothing' &&
-          this.products[index].category !== 'men\'s clothing'
+          this.products.category !== 'women\'s clothing' &&
+          this.products.category !== 'men\'s clothing'
         "
         v-show="!isLoading"
       >
@@ -29,85 +26,75 @@
         </div>
         <button
           class="next-button-not-found"
-          @click="nextProduct(this.products[index].id)"
+          @click="nextProduct(this.products.id)"
         >
           Next Product
         </button>
       </div>
       <div class="container-item" v-else v-show="!isLoading">
         <div class="container-image">
-          <img :src="this.products[index].image" alt="" />
+          <img :src="this.products.image" alt="" />
         </div>
         <div class="container-description">
           <div
             :class="{
-              title_men: this.products[index].category === 'men\'s clothing',
-              title_women:
-                this.products[index].category === 'women\'s clothing',
+              title_men: this.products.category === 'men\'s clothing',
+              title_women: this.products.category === 'women\'s clothing',
             }"
           >
-            {{ this.products[index].title }}
+            {{ this.products.title }}
           </div>
           <div class="category-rating">
-            <div class="category">{{ this.products[index].category }}</div>
+            <div class="category">{{ this.products.category }}</div>
             <div class="rating">
-              <div class="rating_value">
-                {{ this.products[index].rating.rate }}/5
-              </div>
+              <div class="rating_value">{{ this.products.rating.rate }}/5</div>
               <div
                 :class="{
-                  rating_men:
-                    this.products[index].category === 'men\'s clothing',
-                  rating_women:
-                    this.products[index].category === 'women\'s clothing',
+                  rating_men: this.products.category === 'men\'s clothing',
+                  rating_women: this.products.category === 'women\'s clothing',
                 }"
-                v-for="id in Math.round(this.products[index].rating.rate)"
+                v-for="id in Math.round(this.products.rating.rate)"
                 :key="id"
               ></div>
               <div
                 :class="{
-                  rating_men_zero:
-                    this.products[index].category === 'men\'s clothing',
+                  rating_men_zero: this.products.category === 'men\'s clothing',
                   rating_women_zero:
-                    this.products[index].category === 'women\'s clothing',
+                    this.products.category === 'women\'s clothing',
                 }"
-                v-for="id in 5 -
-                Math.round(this.products[index].rating.rate)"
+                v-for="id in 5 - Math.round(this.products.rating.rate)"
                 :key="id"
               ></div>
             </div>
           </div>
           <div class="description-item">
-            {{ this.products[index].description }}
+            {{ this.products.description }}
           </div>
           <div
             :class="{
-              price_men: this.products[index].category === 'men\'s clothing',
-              price_women:
-                this.products[index].category === 'women\'s clothing',
+              price_men: this.products.category === 'men\'s clothing',
+              price_women: this.products.category === 'women\'s clothing',
             }"
           >
-            $ {{ this.products[index].price }}
+            $ {{ this.products.price }}
           </div>
           <div class="button-container">
             <button
               :class="{
-                buy_button_men:
-                  this.products[index].category === 'men\'s clothing',
+                buy_button_men: this.products.category === 'men\'s clothing',
                 buy_button_women:
-                  this.products[index].category === 'women\'s clothing',
+                  this.products.category === 'women\'s clothing',
               }"
             >
               Buy now
             </button>
             <button
               :class="{
-                next_button_men:
-                  this.products[index].category === 'men\'s clothing',
+                next_button_men: this.products.category === 'men\'s clothing',
                 next_button_women:
-                  this.products[index].category === 'women\'s clothing',
+                  this.products.category === 'women\'s clothing',
               }"
-              @click="nextProduct(this.products[index].id)"
+              @click="nextProduct(this.products.id)"
             >
               Next Product
             </button>
@@ -122,14 +109,14 @@
 export default {
   data() {
     return {
-      index: 0,
+      index: 1,
       products: [],
       isLoading: false,
     };
   },
   methods: {
-    nextProduct(id) {
-      if (id === 20) {
+    nextProduct() {
+      if (this.index === 20) {
         this.index = 1;
       } else {
         this.index++;
@@ -139,10 +126,22 @@ export default {
       setTimeout(() => {
         this.isLoading = false;
       }, 1500);
+
+      fetch(`https://fakestoreapi.com/products/${this.index}`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.products = data;
+        });
     },
   },
-  beforeCreate() {
-    fetch(`https://fakestoreapi.com/products/`)
+  created() {
+    this.isLoading = true;
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1500);
+    
+    fetch(`https://fakestoreapi.com/products/${this.index}`)
       .then((response) => response.json())
       .then((data) => {
         this.products = data;
