@@ -21,15 +21,18 @@
         v-show="!isLoading"
       >
         <div class="loader" v-show="isLoading"></div>
-        <div class="description-not-found">
-          this product is unavailable to show
+        <div class="not_found_container">
+          <div class="description-not-found">
+            this product is unavailable to show
+          </div>
+          <button
+            class="next-button-not-found"
+            @click="nextProduct(this.products.id)"
+          >
+            Next Product
+          </button>
         </div>
-        <button
-          class="next-button-not-found"
-          @click="nextProduct(this.products.id)"
-        >
-          Next Product
-        </button>
+        
       </div>
       <div class="container-item" v-else v-show="!isLoading">
         <div class="container-image">
